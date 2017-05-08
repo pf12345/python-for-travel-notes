@@ -30,7 +30,7 @@ $ python manage.py runserver
 
 Open your browser and visit http://127.0.0.1:8000
 
-### Crawler article
+### Crawling article
 for example: 
 
 - ```mafengwo(蚂蜂窝)```:  <br>to save article [http://www.mafengwo.cn/i/5311724.html](http://www.mafengwo.cn/i/5311724.html),<br>
