@@ -5,13 +5,13 @@ Python crawler crawling some websites(mafengwo、tripAdvisor)  travel notes and 
 
 Use [python 2.7](https://www.python.org)、[mongodb](https://www.mongodb.com/download-center)、[PyMongo](http://api.mongodb.com/python/current/tutorial.html) and [Django-1.11](https://www.djangoproject.com/download/) in project
 
-### copy codes
+### Copy codes
 
 ```
 $ git clone https://github.com/pf12345/python-for-travel-notes.git
 ```
 
-### config mongodb
+### Config mongodb
 
 Go to the code folder and enter:
 
@@ -21,7 +21,7 @@ $ cd ./tourism/settings.py
 ```
 find line 83, modify "DBNAME" to your db name and Create a collection named "tourism" in db
 
-### run server
+### Run server
 Go to the code folder and enter:
 
 ```
@@ -30,14 +30,22 @@ $ python manage.py runserver
 
 Open your browser and visit http://127.0.0.1:8000
 
-### save article
+### Crawler article
 for example: 
-to save article http://www.mafengwo.cn/i/5311724.html,
-Open your browser and visit http://127.0.0.1:8000/
 
-```
-save article http://www.mafengwo.cn/i/5311724.html
-```
+- ```mafengwo(蚂蜂窝)```:  <br>to save article [http://www.mafengwo.cn/i/5311724.html](http://www.mafengwo.cn/i/5311724.html),<br>
+Open your browser and visit [http://127.0.0.1:8000/saveMafengwo/5311724](http://127.0.0.1:8000/saveMafengwo/5311724)
+
+- ```tripAdvisor(猫途鹰)```: <br>to save article [https://www.tripadvisor.cn/TourismBlog-t5010.html?p=37085](https://www.tripadvisor.cn/TourismBlog-t5010.html?p=37085),<br>
+Open your browser and visit [http://127.0.0.1:8000/saveTripAdvisor/5010](http://127.0.0.1:8000/saveTripAdvisor/5010)
+
+### Urls
+
+- 主页(游记列表): http://127.0.0.1:8000/
+- 详情页: http://127.0.0.1:8000/detail/:id
+- 保存马蜂窝游记：http://127.0.0.1:8000/saveMafengwo/:id
+- 保存tripAdvisor(猫途鹰)游记：http://127.0.0.1:8000/saveTripAdvisor/:id
+
 
 ## LINKS
 
