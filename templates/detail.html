@@ -1,0 +1,31 @@
+<html class="paper">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1">
+    <title>{{title|safe}}</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/emoji/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="/emoji/emoji.js"></script>
+    <script src="/js/tripAdvisor.js"></script>
+</head>
+<body class="heitisc white mac">
+<iframe aria-hidden="true" id="next-page-container"></iframe>
+<div id="article" role="article" style="-webkit-locale: zh-Hans; border-bottom-width: 0px;">
+    <!-- This node will contain a number of div.page. -->
+    <div><h1 class="title">{{title|safe}}</h1></div>
+    <div class="page">
+    <div class="userInfo">
+        <img src="{{user.avatar}}" alt="">
+        <span>来自{{site.name}}网友</span>
+        <span>{{user.name|safe}}</span>
+    </div>
+        {{content|safe}}
+    </div>
+
+    <script type="text/javascript">
+		//页面需要显示unicode编码的字符，可以后台或前端进行转换,数据库保存的是utf8mb4编码,读出来后，需要转换一次
+		$('.userInfo').emoji();
+	</script>
+</div>
+</body>
+</html>

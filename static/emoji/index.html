@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Emoji Test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<script src="jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="emoji.js"></script>
+	<style type="text/css">
+		body{
+			font-family: Helvetica,Arial,sans-serif;
+			font-size: 1em;
+			line-height:1.5;
+			color: black;
+			background:#f5f5f5;
+			padding:1em;
+		}
+		h1{
+			margin:0;
+			padding:0 .2em .8em;
+			font-size:1.2em;
+		}
+		div{
+			border:1px solid #e5e5e5;
+			padding:10px;
+			border-radius:5px;
+			background:#fff;
+			margin-bottom: 10px;
+		}
+		#text2{
+			font-size: 1.5em;
+		}
+	</style>
+</head>
+<body>
+	<h1>Emoji处理</h1>
+	<div class='emoji'>
+		哈哈\ud83d\ude05
+	</div>
+
+
+	<script type="text/javascript">
+		//页面需要显示unicode编码的字符，可以后台或前端进行转换,数据库保存的是utf8mb4编码,读出来后，需要转换一次
+		$('.emoji').emoji();
+	</script>
+</body>
+</html>

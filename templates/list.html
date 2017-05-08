@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="user-scalable=0">
+    <title>发现最美的旅行</title>  
+</head>
+<body>
+<style>
+    .container-fluid {
+        padding: 20px;
+    }
+
+    .box {
+        /*margin: 10px;*/
+        margin-bottom: 20px;
+        float: left;
+        width: 230px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    }
+
+    .box img {
+        max-width: 100%
+    }
+
+    .box .description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 13px;
+        color: #999;
+        padding: 5px 10px;
+    }
+
+    .convo {
+        padding: 0 15px;
+        color: #999;
+        border-top: 1px solid #F2F2F2;
+        background: #FAFAFA;
+        position: relative;
+        font-size: 13px;
+    }
+
+    .convo .img {
+        width: 34px;
+        height: 34px;
+        margin: 16px 0;
+        display: block;
+        float: left;
+    }
+
+    .convo .text {
+        margin-left: 34px;
+        height: 51px;
+        padding: 15px 0 0 10px;
+        line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+    }
+</style>
+<div id="masonry" class="container-fluid">
+
+</div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/masonry-docs.min.js"></script>
+<script type="text/javascript" src="/emoji/emoji.js"></script>
+<script>
+
+
+    $(function () {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", '/getList/', true);
+        xmlhttp.send(null);
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4) {// 4 = "loaded"
+                if (xmlhttp.status == 200) {// 200 = OK
+                    var items = JSON.parse(xmlhttp.responseText).data;
+                    var _html = '';
+                    for (var i = 0, _i = items.length; i < _i; i++) {
+                        _html += '<a target="_blank" href="/detail/' + items[i]._id + '"><div class="box">' +
+                                '<img src="' + items[i].firstImg + '">' +
+                                '<p title="' + items[i].title + '" class="description">' + items[i].title + '</p>' +
+                                '<div class="convo attribution clearfix">' +
+                                '<a title="渐凉" rel="nofollow" class="img x">' +
+                                '<img src="' + items[i].user.avatar + '" data-baiduimageplus-ignore="1" class="avt">' +
+                                '</a>' +
+                                '<div class="text">' +
+                                '<div class="inner">' +
+                                '<div class="line">' +
+                                '来自' + items[i].site.name + '网友' +
+                                '</div>' +
+                                '<div class="line">' +
+                                '<a rel="nofollow" class="username">' + items[i].user.name + '</a></div></div></div></div></a>' +
+                                '</div>'
+                    }
+                    $('#masonry').html(_html)
+
+
+                    var $container = $('#masonry');
+                    $container.masonry({
+                            itemSelector: '.box',
+                            gutter: 20,
+                            isAnimated: true,
+                        });
+                    $container.imagesLoaded(function () {
+                        $container.masonry({
+                            itemSelector: '.box',
+                            gutter: 20,
+                            isAnimated: true,
+                        });
+                    });
+
+                    $('#masonry .username').emoji();
+
+                }
+                else {
+                    alert("Problem retrieving XML data");
+                }
+            }
+        };
+
+
+    });
+</script>
+</body>
+</html>
