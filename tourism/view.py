@@ -115,4 +115,7 @@ def saveArticle(obj, id):
 	tourismCollection = getCollection('tourism')
 	_id = tourismCollection.insert_one(tourism).inserted_id
 
-	return {"_id": _id, "message": "保存成功"}
+	# print _id['_id']
+	print str(_id)
+
+	return {"_id": str(_id), "message": "保存成功"}

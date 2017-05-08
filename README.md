@@ -30,6 +30,15 @@ $ python manage.py runserver
 
 Open your browser and visit http://127.0.0.1:8000
 
+### save article
+for example: 
+to save article http://www.mafengwo.cn/i/5311724.html,
+Open your browser and visit http://127.0.0.1:8000/
+
+```
+save article http://www.mafengwo.cn/i/5311724.html
+```
+
 ## LINKS
 
 - [python中文基础教程](http://www.runoob.com/python/python-tutorial.html)
