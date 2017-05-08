@@ -3,7 +3,7 @@ Python crawler crawling some websites(mafengwo、tripAdvisor)  travel notes and 
 
 ##Install
 
-Use [python 2.7](https://www.python.org)、[mongodb](https://www.mongodb.com/download-center) and [Django-1.11](https://www.djangoproject.com/download/) in project
+Use [python 2.7](https://www.python.org)、[mongodb](https://www.mongodb.com/download-center)、[PyMongo](http://api.mongodb.com/python/current/tutorial.html) and [Django-1.11](https://www.djangoproject.com/download/) in project
 
 ###copy codes
 
@@ -29,3 +29,10 @@ $ python manage.py runserver
 ```
 
 Open your browser and visit http://127.0.0.1:8000
+
+##LINKS
+
+- [python中文基础教程](http://www.runoob.com/python/python-tutorial.html)
+- [Django中文基础教程](http://www.runoob.com/django/django-first-app.html)
+- [PyMongo 3.4.0 documentation](http://api.mongodb.com/python/current/tutorial.html)
+- [beautifulsoup文档](http://beautifulsoup.readthedocs.io/zh_CN/latest/)
