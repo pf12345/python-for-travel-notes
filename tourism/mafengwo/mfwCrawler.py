@@ -95,22 +95,28 @@ class MAFENGWO:
 
 			soup = BeautifulSoup(html, "html.parser")	
 
-			if soup and soup.select('._j_load_cover img'):	
+			if soup:	
+				if soup.select('.per_pic img'):
+					avatar = soup.select('.per_pic img')[0]['src']
+				else:
+					avatar = ''	
 
-				avatar = soup.select('.per_pic img')[0]['src']
+				if soup.select('.per_name'):	
+					name = soup.select('.per_name')[0]['title'].encode('utf-8')
+				else:
+					name = ''	
 
-				name = soup.select('.per_name')[0]['title'].encode('utf-8')
+				if soup.select('.time'):
+					_time = ''
+					time = soup.select('.time')[0].stripped_strings
+					for item in time:
+						if not _time:
+							_time = item
 
-				time = soup.select('.time')[0].stripped_strings
-
-				_time = ''
-
-				for item in time:
-					if not _time:
-						_time = item
-
-				pattern2 = re.compile('<.*?span>', re.S)
-				_time = re.sub(pattern2, "", _time)
+					pattern2 = re.compile('<.*?span>', re.S)
+					_time = re.sub(pattern2, "", _time)
+				else:
+					_time = ''
 
 				return {"name": name, "avatar": avatar, "oldCreated": _time}
 			else:
@@ -120,7 +126,7 @@ class MAFENGWO:
 		except Exception, e:
 			if hasattr(e,"reason"):
 				print u"连接失败,错误原因",e.reason
-				return None
+				return {"name": '', "avatar": '', "oldCreated": ''}
 
 	
 

@@ -31,7 +31,7 @@ def saveArticle(obj, id):
 	site = obj.getWebsite()
 
 	if article['html'] is '':
-		return {"_id": None, "message": "内容为空"}
+		return {"_id": None, "message": "内容为空"}	
 
 	tourism = {
 		"title": title,
@@ -43,8 +43,11 @@ def saveArticle(obj, id):
 		"user": user,
 		"site": site,
 		"oldId": id,
-		"oldCreated": user['oldCreated']
+		"oldCreated": ''
 	}
+
+	if user and user['oldCreated']:
+		tourism['oldCreated'] = user['oldCreated']
 
 	tourismCollection = getCollection('tourism')
 	_id = tourismCollection.insert_one(tourism).inserted_id

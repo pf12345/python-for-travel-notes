@@ -5,7 +5,7 @@ import models
 import time
 
 def start(page):
-	maxPage = 20
+	maxPage = 50
 	_page = page
 
 	if _page < maxPage:

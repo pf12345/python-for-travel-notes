@@ -21,7 +21,6 @@ def getList(request):
 	for article in articles:
 		_article = {
 			"title": article['title'],
-			"content_txt": article['content_txt'],
 			"firstImg": article['firstImg'],
 			"user": article['user'],
 			"site": article['site'],

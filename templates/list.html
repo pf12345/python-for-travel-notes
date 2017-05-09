@@ -83,12 +83,13 @@
                     var items = JSON.parse(xmlhttp.responseText).data;
                     var _html = '';
                     for (var i = 0, _i = items.length; i < _i; i++) {
-                        _html += '<a target="_blank" href="/detail/' + items[i]._id + '"><div class="box">' +
+                        if(items[i]) {
+                            _html += '<a target="_blank" href="/detail/' + items[i]._id + '"><div class="box">' +
                                 '<img src="' + items[i].firstImg + '">' +
                                 '<p title="' + items[i].title + '" class="description">' + items[i].title + '</p>' +
                                 '<div class="convo attribution clearfix">' +
                                 '<a title="渐凉" rel="nofollow" class="img x">' +
-                                '<img src="' + items[i].user.avatar + '" data-baiduimageplus-ignore="1" class="avt">' +
+                                '<img src="' + (items[i].user ? items[i].user.avatar : 'https://ccm.ddcdn.com/photo-l/08/ec/46/39/alimail2003.jpg') + '" data-baiduimageplus-ignore="1" class="avt">' +
                                 '</a>' +
                                 '<div class="text">' +
                                 '<div class="inner">' +
@@ -96,8 +97,9 @@
                                 '来自' + items[i].site.name + '网友' +
                                 '</div>' +
                                 '<div class="line">' +
-                                '<a rel="nofollow" class="username">' + items[i].user.name + '</a></div></div></div></div></a>' +
+                                '<a rel="nofollow" class="username">' + (items[i].user ? items[i].user.name : '') + '</a></div></div></div></div></a>' +
                                 '</div>'
+                        }
                     }
                     $('#masonry').html(_html)
 
