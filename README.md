@@ -39,6 +39,14 @@ Open your browser and visit [http://127.0.0.1:8000/saveMafengwo/5311724](http://
 - ```tripAdvisor(猫途鹰)```: <br>to save article [https://www.tripadvisor.cn/TourismBlog-t5010.html?p=37085](https://www.tripadvisor.cn/TourismBlog-t5010.html?p=37085),<br>
 Open your browser and visit [http://127.0.0.1:8000/saveTripAdvisor/5010](http://127.0.0.1:8000/saveTripAdvisor/5010)
 
+### Auto crawler(自动抓取)
+Go to the code folder and enter:
+
+```
+//蚂蜂窝游记自动爬取
+$ python mfwAutoCrawler.py
+```
+
 ### Urls
 
 - 主页(游记列表): http://127.0.0.1:8000/
