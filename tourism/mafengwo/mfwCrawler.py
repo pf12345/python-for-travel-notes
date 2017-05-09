@@ -3,6 +3,9 @@ import urllib
 import urllib2
 from bs4 import BeautifulSoup
 import re
+import time
+
+from bson.objectid import ObjectId
 
 
 
@@ -20,7 +23,7 @@ class MAFENGWO:
 			url = self.baseURL
 			request = urllib2.Request(url)
 			response = urllib2.urlopen(request)
-			soup = BeautifulSoup(response.read().decode('utf8').encode('utf8'))
+			soup = BeautifulSoup(response.read().decode('utf8').encode('utf8'), "html.parser")
 			return soup
 		except Exception, e:
 			if hasattr(e,"reason"):
@@ -29,20 +32,21 @@ class MAFENGWO:
 
 	def getTitle(self):
 		soup = self.getPage()
-		if soup:
+		if soup and soup.select('.headtext'):
 			return soup.select('.headtext')[0].string
 		else:
 			return ''	
 
 	def getContent(self):
 		soup = self.getPage()
-		if soup:
+		if soup and soup.select('.vc_article'):
 			article = soup.select('.vc_article')[0]
 			images = article.select('._j_lazyload')
 			links = article.select('a')
 			firstImg = ''
 
-			firstImg = soup.select('._j_load_cover img')[0]['src']
+			if soup.select('._j_load_cover img'):
+				firstImg = soup.select('._j_load_cover img')[0]['src']
 
 			for s in soup.select('.vc_total'):
 				s.extract()
@@ -62,7 +66,8 @@ class MAFENGWO:
 
 			return {"html": article.prettify(), "text": articleText, "firstImg": firstImg}	
 		else:
-			return ''	
+			return {"html": '', "text": '', "firstImg": ''}
+
 
 	def removeJqueryJson(self, url):
 
@@ -88,26 +93,29 @@ class MAFENGWO:
 
 			html = self.removeJqueryJson(url)
 
-			soup = BeautifulSoup(html)		
+			soup = BeautifulSoup(html, "html.parser")	
 
-			avatar = soup.select('.per_pic img')[0]['src']
+			if soup and soup.select('._j_load_cover img'):	
 
-			name = soup.select('.per_name')[0]['title'].encode('utf-8')
+				avatar = soup.select('.per_pic img')[0]['src']
 
-			time = soup.select('.time')[0].stripped_strings
+				name = soup.select('.per_name')[0]['title'].encode('utf-8')
 
-			_time = ''
+				time = soup.select('.time')[0].stripped_strings
 
-			for item in time:
-				if not _time:
-					_time = item
+				_time = ''
 
-			pattern2 = re.compile('<.*?span>', re.S)
-			_time = re.sub(pattern2, "", _time)
+				for item in time:
+					if not _time:
+						_time = item
 
-			print avatar
+				pattern2 = re.compile('<.*?span>', re.S)
+				_time = re.sub(pattern2, "", _time)
 
-			return {"name": name, "avatar": avatar, "oldCreated": _time}
+				return {"name": name, "avatar": avatar, "oldCreated": _time}
+			else:
+				
+				return {"name": '', "avatar": '', "oldCreated": ''}
 
 		except Exception, e:
 			if hasattr(e,"reason"):
@@ -117,7 +125,9 @@ class MAFENGWO:
 	
 
 	def getWebsite(self):
+
 		return {"url": self.baseURL, "name": "蚂蜂窝"}
+
 
 	def getListForPage(self, page):
 
@@ -133,41 +143,31 @@ class MAFENGWO:
 
 				html = html.decode('string-escape')
 
-				soup = BeautifulSoup(html)		
+				soup = BeautifulSoup(html, "html.parser")		
 
 				links = soup.select('.tn-item .tn-image a')
 
+				index = 0
+
+				_ids = []
+
 				for link in links:
-					self.oldIds.append(link['href'].replace('/i/', '').replace('.html', ''))
+					_id = link['href'].replace('/i/', '').replace('.html', '')
 
-				# page += 1	
+					_ids.append(_id)
 
-				# print page
-
-				# self.getListForPage(page)	
+				return _ids
 
 			except Exception, e:
 				if hasattr(e,"reason"):
 					print u"连接失败,错误原因",e.reason
-					return None					
+					return None	
+
+
 	def getIds(self):
 		return 	self.oldIds			
 
 def getMaFengWo(id):
 	return MAFENGWO(id)
 
-# mafengwo = MAFENGWO('6899663')
-
-# mafengwo.getPage()
-# mafengwo.getTitle()
-
-# mafengwo.getContent()
-
-# mafengwo.getListForPage(1)
-
-# mafengwo.getUser()
-
-# bdtb.getPage(1)
-# print bdtb.gtitle()
-# bdtb.getContent()
 

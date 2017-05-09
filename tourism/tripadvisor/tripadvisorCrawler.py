@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 import re
 
 
-
 class TRIPADVISOR:
 	#初始化，传入基地址，是否只看楼主的参数
 	def __init__(self,article_id):
@@ -111,13 +110,4 @@ class TRIPADVISOR:
 def getTripAdvisor(id):
 	return TRIPADVISOR(id)
 
-# tripadvisor = TRIPADVISOR('5578')
-
-# tripadvisor.getArticleCards()
-
-# tripadvisor.getContent()
-
-# print tripadvisor.getUser()
-
-# tripadvisor.getTitle()
 
