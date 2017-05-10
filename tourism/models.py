@@ -20,7 +20,7 @@ def getCollection(collection):
 def saveArticle(obj, id):
 	articleCollection = getCollection('tourism')
 	if articleCollection.find_one({"oldId": id}):
-		return {"_id": None, "message": "已有相关数据"}
+		return {"_id": None, "message": "已有相关数据", "isQuery": "false"}
 
 	title = obj.getTitle()
 
@@ -31,7 +31,7 @@ def saveArticle(obj, id):
 	site = obj.getWebsite()
 
 	if article['html'] is '':
-		return {"_id": None, "message": "内容为空"}	
+		return {"_id": None, "message": "内容为空", "isQuery": "true"}	
 
 	tourism = {
 		"title": title,
@@ -52,4 +52,4 @@ def saveArticle(obj, id):
 	tourismCollection = getCollection('tourism')
 	_id = tourismCollection.insert_one(tourism).inserted_id
 
-	return {"_id": str(_id), "message": "保存成功", "_title": title}		
+	return {"_id": str(_id), "message": "保存成功", "_title": title, "isQuery": "true"}		

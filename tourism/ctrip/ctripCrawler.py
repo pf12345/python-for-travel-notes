@@ -15,7 +15,6 @@ class CTRIP:
 		self.baseURL = 'http://you.ctrip.com/travels/' + article_id + '.html'
 		self.userInfoURL = 'https://www.mafengwo.cn/note/__pagelet__/pagelet/headOperateApi?callback=jQuery1810173556954190627_1492868085919&params=%7B%22iid%22%3A%22' + article_id +'%22%7D&_=1492868086249'
 		self.defaultTitle = '美好游记'
-		self.oldIds = []
 		self.soup = None
 
 	
@@ -49,7 +48,7 @@ class CTRIP:
 		soup = self.getPage()
 		if soup and soup.select('.ctd_content'):
 			article = soup.select('.ctd_content')[0]
-			images = article.select('.img_blk img')
+			images = article.select('img')
 			links = article.select('a')
 			firstImg = ''
 
@@ -64,7 +63,8 @@ class CTRIP:
 			for img in images:
 				if not firstImg:
 					firstImg = img['src']
-				img['src'] = img['data-original']	
+				if img['data-original']:
+					img['src'] = img['data-original']	
 
 			for item in article.stripped_strings:
 				articleText += item
@@ -102,30 +102,27 @@ class CTRIP:
 
 	def getListForPage(self, page):
 
-		if page < 250:
+		if page < 550:
 
-			url = 'http://www.mafengwo.cn/note/__pagelet__/pagelet/recommendNoteApi?callback=jQuery18103478581123017468_1492999122522&params=%7B%22type%22%3A0%2C%22objid%22%3A0%2C%22page%22%3A'+str(page)+'%2C%22ajax%22%3A1%2C%22retina%22%3A0%7D&_=1492999206862'	
+			url = 'http://you.ctrip.com/TravelSite/Home/IndexTravelListHtml?p='+str(page)+'&Idea=0&Type=1&Plate=0'	
 
 			try:
 
-				html = self.removeJqueryJson(url)
+				request = urllib2.Request(url)
+				response = urllib2.urlopen(request)
+				_html = response.read().decode('utf8').encode('utf8')
+				pattern1 = re.compile('\&nbsp\;')
+				_html = re.sub(pattern1, " ", _html)
+				soup = BeautifulSoup(_html, "html.parser")
 
-				html = html.replace('\\/', '/')
-
-				html = html.decode('string-escape')
-
-				soup = BeautifulSoup(html, "html.parser")		
-
-				links = soup.select('.tn-item .tn-image a')
-
-				index = 0
+				links = soup.select('.city-image')
 
 				_ids = []
 
 				for link in links:
-					_id = link['href'].replace('/i/', '').replace('.html', '')
+					_id = link['href'].replace('.html', '').replace('', '')
 
-					_ids.append(_id)
+					_ids.append(_id.split('/')[2] + '/' + _id.split('/')[3])
 
 				return _ids
 
@@ -133,10 +130,6 @@ class CTRIP:
 				if hasattr(e,"reason"):
 					print u"连接失败,错误原因",e.reason
 					return None	
-
-
-	def getIds(self):
-		return 	self.oldIds			
 
 def getCtrip(id):
 	return CTRIP(id)
@@ -146,3 +139,5 @@ def getCtrip(id):
 # print ctrip.getTitle()
 # print ctrip.getContent()
 # print ctrip.getUser()
+
+# ctrip.getListForPage(1)
