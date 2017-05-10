@@ -8,6 +8,7 @@ from bson.objectid import ObjectId
  
 from mafengwo import mfwCrawler
 from tripadvisor import tripadvisorCrawler
+from ctrip import ctripCrawler
 
 def list(request):
 	return render(request, 'list.html')
@@ -15,7 +16,7 @@ def list(request):
 #获取游记列表接口
 def getList(request):
 	articleCollection = models.getCollection('tourism')
-	articles = articleCollection.find()
+	articles = articleCollection.find().limit(20)
 
 	_articles = []
 	for article in articles:
@@ -51,6 +52,17 @@ def saveTripAdvisor(request, id):
 	result = models.saveArticle(_tripAdvisor, _id)
 
 	return HttpResponse(json.dumps(result))
+
+# 保存tripAdvu=isor(官方中文名 猫途鹰)游记请求
+def saveCtrip(request):
+
+	_id = 'sanya61/3420335'
+	
+	_ctrip = ctripCrawler.getCtrip('sanya61/3420335')
+
+	result = models.saveArticle(_ctrip, _id)
+
+	return HttpResponse(json.dumps(result))	
 
 
 # 游记详情

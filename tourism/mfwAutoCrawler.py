@@ -5,7 +5,7 @@ import models
 import time
 
 def start(page):
-	maxPage = 50
+	maxPage = 250
 	_page = page
 
 	if _page < maxPage:
@@ -27,7 +27,7 @@ def start(page):
 			else:
 				print 'saving: 保存第' + str(_page) + '页，_id为：' + str(_id) + '，数据保存失败'			
 
-			time.sleep(10)
+			time.sleep(6)
 
 		print 'end: 第' + str(_page) + '页数据保存成功 ============='
 

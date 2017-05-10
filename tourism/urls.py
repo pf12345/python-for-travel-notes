@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^$', view.list),
     url(r'^saveMafengwo/(.*?)$', view.saveMafengwo),
     url(r'^saveTripAdvisor/(.*?)$', view.saveTripAdvisor),
+    url(r'^saveCtrip/', view.saveCtrip),
     url(r'^detail/(.*?)$', view.detail),
     url(r'^list/', view.list),
     url(r'^getList/', view.getList)
