@@ -173,7 +173,7 @@ class MAFENGWO:
 	def getIds(self):
 		return 	self.oldIds			
 
-def getMaFengWo(id):
+def getModule(id):
 	return MAFENGWO(id)
 
 

@@ -36,7 +36,7 @@ def getList(request):
 def saveMafengwo(request, id):
 	_id = id
 
-	_mafengwo = mfwCrawler.getMaFengWo(_id)
+	_mafengwo = mfwCrawler.getModule(_id)
 
 	result = models.saveArticle(_mafengwo, _id)
 
@@ -47,7 +47,7 @@ def saveMafengwo(request, id):
 def saveTripAdvisor(request, id):
 	_id = id
 
-	_tripAdvisor = tripadvisorCrawler.getTripAdvisor(_id)
+	_tripAdvisor = tripadvisorCrawler.getModule(_id)
 
 	result = models.saveArticle(_tripAdvisor, _id)
 
@@ -58,7 +58,7 @@ def saveCtrip(request):
 
 	_id = 'srilanka100084/3385146'
 
-	_ctrip = ctripCrawler.getCtrip('sanya61/3420335')
+	_ctrip = ctripCrawler.getModule('sanya61/3420335')
 
 	result = models.saveArticle(_ctrip, _id)
 

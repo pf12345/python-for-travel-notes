@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
+import sys
+sys.path.insert(0, "..")
 
-from mafengwo import mfwCrawler
+from ctrip import ctripCrawler
 import models
 import time
 
 def start(page):
-	maxPage = 250
+	maxPage = 550
 	_page = page
 
 	if _page < maxPage:
-		_mafengwo = mfwCrawler.getMaFengWo('6899663')
+		_ctrip = ctripCrawler.getModule('sanya61/3420335')
 
-		_ids = _mafengwo.getListForPage(_page)
+		_ids = _ctrip.getListForPage(_page)
 
 		print 'start: 第' + str(_page) + '页数据开始保存 ============='	
 
 		for _id in _ids:
-			obj = mfwCrawler.getMaFengWo(_id)
+			obj = ctripCrawler.getModule(_id)
 			result = models.saveArticle(obj, _id)
 
 			if result:
@@ -40,7 +42,7 @@ def start(page):
 	else:
 		print 'warning: 页数不能超过'+ str(maxPage) +' ============='	
 
-start(1)
+start(32)
 	
 
 

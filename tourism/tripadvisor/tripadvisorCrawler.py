@@ -107,7 +107,7 @@ class TRIPADVISOR:
 		return {"url": self.baseURL, "name": "tripAdvisor"}
 	
 
-def getTripAdvisor(id):
+def getModule(id):
 	return TRIPADVISOR(id)
 
 

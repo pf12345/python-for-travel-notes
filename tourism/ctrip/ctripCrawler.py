@@ -69,7 +69,7 @@ class CTRIP:
 					try:
 						img['src'] = img['data-original']
 					except AttributeError as e:
-						pass 1
+						pass
 				if not firstImg and img:
 					firstImg = img['src']
 				
@@ -141,7 +141,7 @@ class CTRIP:
 					print u"连接失败,错误原因",e.reason
 					return None	
 
-def getCtrip(id):
+def getModule(id):
 	return CTRIP(id)
 
 # ctrip = CTRIP('sanya61/3420335')
