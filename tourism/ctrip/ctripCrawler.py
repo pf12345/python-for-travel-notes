@@ -41,8 +41,12 @@ class CTRIP:
 		soup = self.getPage()
 		if soup and soup.select('.title1'):
 			return soup.select('.title1')[0].string
-		else:
+		elif soup and soup.select('.ctd_head_left h2'):
+			return soup.select('.ctd_head_left h2')[0].string
+		else:	
 			return ''	
+
+
 
 	def getContent(self):
 		soup = self.getPage()
@@ -61,10 +65,14 @@ class CTRIP:
 				link['href'] = 'javascript:;'
 
 			for img in images:
-				if not firstImg:
+				if img and img.has_attr('data-original'):
+					try:
+						img['src'] = img['data-original']
+					except AttributeError as e:
+						pass 1
+				if not firstImg and img:
 					firstImg = img['src']
-				if img['data-original']:
-					img['src'] = img['data-original']	
+				
 
 			for item in article.stripped_strings:
 				articleText += item
@@ -83,7 +91,9 @@ class CTRIP:
 				avatar = ''	
 			if soup.select('.nickname'):	
 				name = soup.select('.nickname a')[0].string.encode('utf-8')
-			else:
+			elif soup.select('#authorDisplayName'):
+				name = soup.select('#authorDisplayName')[0].string.encode('utf-8')
+			else:	
 				name = ''	
 			if soup.select('.time'):
 				_time = soup.select('.time')[0].string	

@@ -40,7 +40,7 @@ def start(page):
 	else:
 		print 'warning: 页数不能超过'+ str(maxPage) +' ============='	
 
-start(1)
+start(32)
 	
 
 

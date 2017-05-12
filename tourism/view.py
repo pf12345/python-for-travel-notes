@@ -16,7 +16,7 @@ def list(request):
 #获取游记列表接口
 def getList(request):
 	articleCollection = models.getCollection('tourism')
-	articles = articleCollection.find().limit(20)
+	articles = articleCollection.find().sort([("_id", -1)]).limit(20)
 
 	_articles = []
 	for article in articles:
@@ -56,8 +56,8 @@ def saveTripAdvisor(request, id):
 # 保存tripAdvu=isor(官方中文名 猫途鹰)游记请求
 def saveCtrip(request):
 
-	_id = 'sanya61/3420335'
-	
+	_id = 'srilanka100084/3385146'
+
 	_ctrip = ctripCrawler.getCtrip('sanya61/3420335')
 
 	result = models.saveArticle(_ctrip, _id)
