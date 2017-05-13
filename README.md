@@ -43,9 +43,21 @@ Open your browser and visit [http://127.0.0.1:8000/saveTripAdvisor/5010](http://
 Go to the code folder and enter:
 
 ```
-//蚂蜂窝游记自动爬取
-$ python mfwAutoCrawler.py
+//蚂蜂窝游记自动爬取(auto crawler mafengwo)
+$ cd tourism
+$ cd autoCrawler
+$ python mafengwo.py
+
 ```
+
+```
+//携程游记自动爬取(auto crawler ctrip)
+$ cd tourism
+$ cd autoCrawler
+$ python ctrip.py
+
+```
+
 
 ### Urls
 
