@@ -24,7 +24,7 @@ class TRIPADVISOR:
 			}
 			request = urllib2.Request(url, {}, headers)
 			response = urllib2.urlopen(request)
-			soup = BeautifulSoup(response.read().decode('utf8').encode('utf8'), "html.parser")
+			soup = BeautifulSoup(response.read().decode('utf8').encode('utf8'), "html.parser", from_encoding="utf-8")
 			return soup
 		except Exception, e:
 			if hasattr(e,"reason"):

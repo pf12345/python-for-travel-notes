@@ -29,7 +29,7 @@ class CTRIP:
 				_html = response.read().decode('utf8').encode('utf8')
 				pattern1 = re.compile('\&nbsp\;')
 				_html = re.sub(pattern1, " ", _html)
-				soup = BeautifulSoup(_html, "html.parser")
+				soup = BeautifulSoup(_html, "html.parser", from_encoding="utf-8")
 				self.soup = soup
 				return soup
 		except Exception, e:
