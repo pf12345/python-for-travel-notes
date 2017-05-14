@@ -38,41 +38,94 @@ class ADDRESS:
 
 	def getInformation(self):
 		soup = self.getPage()
-		if soup and soup.select('.mapContainer'):
-			lng = soup.select('.mapContainer')[0]['data-lng']
-			lat = soup.select('.mapContainer')[0]['data-lat']
-			phone = soup.select('.phoneNumber')[0].string
+		if soup:
+			if soup.select('.mapContainer'):
+				lng = soup.select('.mapContainer')[0]['data-lng']
+				lat = soup.select('.mapContainer')[0]['data-lat']
+			else:
+				lng = ''
+				lat = ''	
 
-			operatingDate = soup.select('#HOUR_OVERLAY_CONTENTS .days')[1].string
-			operatingTime = soup.select('#HOUR_OVERLAY_CONTENTS .hours')[0].string
+			if soup.select('.phoneNumber'):
+				phone = soup.select('.phoneNumber')[0].string
+			else:
+				phone = ''	
 
-			_introduction = soup.select('#OVERLAY_CONTENTS .listing_details p')[0].string
+			englishName = soup.select('.altHead')[0].string
 
-			print _introduction
+			if soup.select('#HOUR_OVERLAY_CONTENTS'):
+				operatingDate = soup.select('#HOUR_OVERLAY_CONTENTS .days')[1].string #营业星期
+				operatingTime = soup.select('#HOUR_OVERLAY_CONTENTS .hours')[0].string #营业时间
+			else:
+				operatingDate = ''
+				operatingTime = ''	
+
+			if soup.select('#OVERLAY_CONTENTS .listing_details p'):
+				_introduction = soup.select('#OVERLAY_CONTENTS .listing_details p')[0].string #详细介绍
+			else:
+				_introduction = ''	
 
 			_fullAddress = ''
-
 			for _node in soup.select('.format_address')[0]:
 				if _node.string:
 					_fullAddress += _node.string
 
+			_continent = soup.select('.topLevel li a')[1].string #洲
+			_country = soup.select('.topLevel li a')[2].string #国
+			_province = soup.select('.topLevel li a')[3].string #省
+			_county = soup.select('.topLevel li a')[4].string #县
+			
+			_scoreNodes = soup.select('.valueCount')
+			score = 0
+			scoreList = []
+			if _scoreNodes:
+
+				for _node in _scoreNodes:
+					scoreList.append(float(_node.string))
+
+				scoreList.reverse()	
+
+				for _index, _score in enumerate(scoreList):
+					score += (_score/sum(scoreList)) * (_index+1)
+
+				score = round(score, 1)
+
+			_subordinateTypeList = []
+			_subordinateType = ''
+			for _type in soup.select('#HEADING_GROUP .heading_details .detail a'):
+				_subordinateTypeList.append(_type.string)
+
+			for _index, _type in enumerate(_subordinateTypeList):
+				if _index > 0:
+					_subordinateType += ', '	
+				_subordinateType += _type
+
 			return {
-				"lng": lng, 
-				"lat": lat, 
-				"name": self.address["name"], 
-				"fullAddress": _fullAddress, 
-				"phone": phone,
+				"lng": lng, #纬度
+				"lat": lat, #纬度
+				"name": self.address["name"], #名称
+				"address": {
+					"fullAddress": _fullAddress,  #详细地址
+					"continent": _continent, #洲
+					"country": _country, #国
+					"province": _province, #省
+					"county": _county #县
+				},
+				"subordinateType": _subordinateType, #所属类型
+				"phone": phone, #联系方式
 				"operatingTime": {
 					"date": operatingDate,
 					"time": operatingTime
-				},
-				"introduction": _introduction
+				}, #营业时间
+				"introduction": _introduction, #详细介绍
+				"score": score, #得分
+				"englishName": englishName
 			}
 		else:	
-			return {"lng": lng, "lat": lat, "name": self.address["name"],  "fullAddress": '', "phone": '', "operatingTime": None, "introduction": ''}	
+			return None
 
 
-_address = ADDRESS(MAPS[0])
+_address = ADDRESS(MAPS[10])
 
 print _address.getInformation()
 
