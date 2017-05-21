@@ -53,3 +53,14 @@ def saveArticle(obj, id):
 	_id = tourismCollection.insert_one(tourism).inserted_id
 
 	return {"_id": str(_id), "message": "保存成功", "_title": title, "isQuery": "true"}		
+
+def saveAddressInfo(obj):
+	addressCollection = getCollection('address')
+	if obj:
+		if addressCollection.find_one({'name': obj['name']}):
+			return {"_id": None, "message": "已有相关数据", "isQuery": "false"}
+		else:
+			_id = addressCollection.insert_one(obj).inserted_id	
+			return {"_id": str(_id), "message": "保存成功", "_title": obj['name'], "isQuery": "true"}	
+	else:
+		return {"_id": None, "message": "没有数据信息", "isQuery": "false"}		

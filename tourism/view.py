@@ -73,3 +73,13 @@ def detail(request, _id):
 		return render(request, 'detail.html', article)
 	else:
 		return HttpResponse('未找到相应数据')	
+
+# 获取景区信息列表
+def getAddressList(request):
+	addressCollection = models.getCollection('address')
+	addressList = addressCollection.find().sort([("_id", 1)]).limit(20)
+	_addressList = []
+	for address in addressList:
+		address['_id'] = str(address['_id'])
+		_addressList.append(address)
+	return HttpResponse(json.dumps({"result": "ok", "data": _addressList}), content_type="application/json")

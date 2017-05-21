@@ -29,7 +29,8 @@ urlpatterns = [
     url(r'^saveCtrip/', view.saveCtrip),
     url(r'^detail/(.*?)$', view.detail),
     url(r'^list/', view.list),
-    url(r'^getList/', view.getList)
+    url(r'^getList/', view.getList),
+    url(r'^getAddressList/', view.getAddressList)
 ]
 
 media_root = os.path.join(settings.BASE_DIR,'static')

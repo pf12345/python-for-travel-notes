@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import sys
+sys.path.insert(0, "..")
+
 import urllib
 import urllib2
 from bs4 import BeautifulSoup
@@ -8,6 +11,7 @@ import time
 
 from bson.objectid import ObjectId
 from urlMaps import MAPS
+import models
 
 
 class ADDRESS:
@@ -117,15 +121,29 @@ class ADDRESS:
 					"date": operatingDate,
 					"time": operatingTime
 				}, #营业时间
-				"introduction": _introduction, #详细介绍
+				"tripAdvisor_introduction": _introduction, #详细介绍
 				"score": score, #得分
 				"englishName": englishName
 			}
 		else:	
 			return None
 
+	def saveToDB(self, info):
+		_result = models.saveAddressInfo(info)
 
-_address = ADDRESS(MAPS[10])
+		return _result
 
-print _address.getInformation()
+
+for _config in MAPS:
+	_address = ADDRESS(_config)
+	_info = _address.getInformation()
+	_result = _address.saveToDB(_info)
+
+	if _result['_id']:
+		print 'saving: 保存' + _result['_title'] + '，_id为：' + str(_result['_id']) + '，数据保存成功'
+	else:
+		print 'saving: 保存' + _info['name'] + '，数据保存失败，失败原因' + _result['message']	
+
+	if _result['isQuery'] is 'true':
+		time.sleep(6)
 
